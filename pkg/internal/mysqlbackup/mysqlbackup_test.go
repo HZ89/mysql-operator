@@ -16,6 +16,7 @@ limitations under the License.
 package mysqlbackup
 
 import (
+	"github.com/go-logr/zapr"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
@@ -27,7 +28,7 @@ import (
 )
 
 func TestMySQLBackupWrapper(t *testing.T) {
-	logf.SetLogger(logf.ZapLoggerTo(GinkgoWriter, true))
+	logf.SetLogger(zapr.NewLogger(logf.RawStackdriverZapLoggerTo(GinkgoWriter, true)))
 
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "MySQLBackup wrapper unit tests")
