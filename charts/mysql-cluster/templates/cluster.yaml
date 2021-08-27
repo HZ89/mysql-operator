@@ -16,6 +16,14 @@ spec:
   secretName: {{ include "mysql-cluster.secretName" . }}
   {{- end }}
 
+  {{- if .Values.image }}
+  image: {{ .Values.image }}
+  {{- end }}
+
+  {{- if .Values.mysqlVersion }}
+  mysqlVersion: {{ .Values.mysqlVersion | quote }}
+  {{- end }}
+
   {{- if .Values.initBucketURL }}
   initBucketURL: {{ .Values.initBucketURL }}
   {{- end }}
@@ -46,20 +54,20 @@ spec:
 
   {{- if .Values.mysqlConf }}
   mysqlConf:
-    {{ toYaml .Values.mysqlConf | nindent 4 }}
+    {{- toYaml .Values.mysqlConf | nindent 4 }}
   {{- end }}
 
   {{- if .Values.podSpec }}
   podSpec:
-    {{ toYaml .Values.podSpec | nindent 4 }}
+    {{- toYaml .Values.podSpec | nindent 4 }}
   {{- end }}
 
   {{- if .Values.volumeSpec }}
   volumeSpec:
-    {{ toYaml .Values.volumeSpec | nindent 4 }}
+    {{- toYaml .Values.volumeSpec | nindent 4 }}
   {{- end }}
 
   {{- if .Values.initFileExtraSQL }}
   initFileExtraSQL:
-    {{ toYaml .Values.initFileExtraSQL | nindent 4 }}
+    {{- toYaml .Values.initFileExtraSQL | nindent 6 }}
   {{- end }}

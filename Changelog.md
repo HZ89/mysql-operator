@@ -7,6 +7,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 ### Added
+ * Add `image` and `mysqlVersion` options to MysqlCluster chart. This bumps the chart version to `0.3.1`
  * Add `backupAffinity`, `backupNodeSelector`, `backupPriorityClassName`, `backupTolerations`
    to `.Spec.PodSpec` to allow specifying custom scheduling constraints for backup jobs.
  * Add the ability to set the `imagePullSecrets` for the operator statefulset.
@@ -22,22 +23,27 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
  * Add `backupCompressCommand` and `backupDecompressCommand` to allow using
    different compressors/decompressors when backing up or restoring.
  * Add support for MySQL version 8.0
+ * Add `go modules` cache
 ### Changed
  * Only add `binlog-space-limit` for `percona` image
  * Make user-defined InitContainer take the precedence
  * Set timeout of 15s on connection between the operator and Orchestrator
- * Bump controller-util dependency to 0.1.18 which fixes some updates on pod spec.
+ * Bump controller-util dependency to 0.3.0 which fixes some updates on pod spec.
  * Removed `NO_AUTO_VALUE_ON_ZERO` from `sql-mode` to be inline with MySQL default value
  * Remove use go module instead of dep
- * Update k8s client to `v0.18.2`
- * Update kubebuilder (to `v2.3.1`) along with controller-runtime (to `v0.8.3`) and controller-gen
+ * Update k8s client to `v0.21.2`
+ * Update kubebuilder (to `v2.3.1`) along with controller-runtime (to `v0.9.2`) and controller-gen
  * Update rclone to `v1.53.1`
  * Update `Orchestrator` version from `v3.1.2` to `v3.2.3`
  * Set default MySQL server version to `5.7.31`
  * Generate CRDs with controller-gen `v0.5.0`
- * Update client-go to `v0.20.4`
+ * Update `getOrdinalFromHostname` and `IsFirstPodInSet`
+ * Use `klog` for logging
 ### Removed
 ### Fixed
+ * Fix insufficient permissions during startup
+ * Fix the `xtrabackup` `--tables-exclude` cannot take effect
+ * Fix the pod unable to connect `Orchestrator`
  * Fix pod labels diff of map
  * Fixed backup cleanup job bug (#577)
  * Fix Kubebuilder path in Makefile.
@@ -45,6 +51,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
  * Fix #637 mysqlbackup status is not updated correctly.
  * Fix #647 custom conf can't overwrite the default conf
  * Fix #627 let Orchestrator do the failover
+ * Fix #694 the error caused by backing up without waiting for master to be created.
 
 ## [0.4.0] - 2020-06-17
 ### Added
@@ -71,6 +78,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
  * Add `MetricsExporterResources` and `MySQLOperatorSidecarResrouces` in `.Spec.PodSpec` to allow
    the user specifying resources for thos sidecars containers.
  * Add command line flag to configure number of workers for orchestrator controller.
+ * Add livenessProbe to controller
 ### Changed
  * [#422](https://github.com/presslabs/mysql-operator/pull/422) adds the `SidecarServerPort` to the
    `MasterService` and introduces one new service, HealthyReplicasService, so that we can try to
